@@ -1,0 +1,27 @@
+# IDE config
+.vscode/
+.idea
+
+# debug
+debug
+
+# cache
+*.cache
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Mac
+.DS_Store
+
+# exclude everything from vendor folder
+vendor/*
+
+# binary
+/cmd/shortener/shortener
+
+# exception to the rule
+!vendor/.gitkeep

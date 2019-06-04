@@ -1,0 +1,16 @@
+server:
+  http_port: ":3002"
+database:
+  main: 
+    file_name: "main.db"
+    timeout: 1000
+  statistic: 
+    file_name: "statistic.db"
+    timeout: 1000
+shortener:
+  charset: "23456789bcdfghjkmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ"
+  unique_string_length: 7
+redirect:
+  base_redirect: 
+    url: "https://www.junnotantra.com"
+    active: true

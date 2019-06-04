@@ -1,0 +1,12 @@
+app_root: .
+ignored_folders:
+- vendor
+included_extensions:
+- .go
+- .lock
+- .ini
+build_target_path: "./cmd/shortener"
+build_path: "./cmd/shortener"
+build_delay: 500ns
+binary_name: shortener
+enable_colors: true
