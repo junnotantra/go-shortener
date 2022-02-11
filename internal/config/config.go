@@ -77,7 +77,7 @@ func Get() *Config {
 func getDefaultConfig() error {
 	config = &Config{
 		Server: ServerConfig{
-			HTTPPort: ":3002",
+			HTTPPort: ":" + os.Getenv("PORT"),
 		},
 		Database: DatabaseConfig{
 			Main: DatabaseSetting{
