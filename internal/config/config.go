@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 
@@ -30,7 +31,8 @@ func Init(opts ...Option) error {
 
 	out, err := ioutil.ReadFile(opt.configFile)
 	if err != nil {
-		return err
+		log.Println(err)
+		return getDefaultConfig()
 	}
 
 	return yaml.Unmarshal(out, &config)
@@ -48,7 +50,7 @@ func WithConfigFile(file string) Option {
 
 // getDefaultConfigFile get default config file.
 // - files/etc/shortener/shortener.development.yaml in dev
-// - otherwise /etc/shortener/shortener.{TKPENV}.yaml
+// - otherwise /etc/shortener/shortener.{JTENV}.yaml
 func getDefaultConfigFile() string {
 	var (
 		repoPath   = filepath.Join(os.Getenv("GOPATH"), "src/github.com/junnotantra/go-shortener")
@@ -69,4 +71,34 @@ func getDefaultConfigFile() string {
 // Get config
 func Get() *Config {
 	return config
+}
+
+// getDefaultConfig will be fallback if cannot read config from file
+func getDefaultConfig() error {
+	config = &Config{
+		Server: ServerConfig{
+			HTTPPort: ":3002",
+		},
+		Database: DatabaseConfig{
+			Main: DatabaseSetting{
+				FileName: "main.db",
+				Timeout:  1000,
+			},
+			Statistic: DatabaseSetting{
+				FileName: "statistic.db",
+				Timeout:  1000,
+			},
+		},
+		Shortener: ShortenerConfig{
+			Charset:            "23456789bcdfghjkmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ",
+			UniqueStringLength: 7,
+		},
+		Redirect: RedirectConfig{
+			BaseRedirect: BaseRedirectSetting{
+				Active: false,
+			},
+		},
+	}
+
+	return nil
 }
